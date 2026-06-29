@@ -1,0 +1,14 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#1e1e2e"/>
+  <rect x="50" y="50" width="700" height="500" fill="#2d2d44" rx="8"/>
+  <text x="400" y="120" text-anchor="middle" font-size="28" fill="#8B5CF6" font-family="monospace">代码诗人 — 诗韵注释</text>
+  <text x="80" y="180" font-size="16" fill="#a0a0c0" font-family="monospace">// /**</text>
+  <text x="80" y="210" font-size="16" fill="#8B5CF6" font-family="monospace">//  * 裁云镂月，缩万象于方寸</text>
+  <text x="80" y="240" font-size="16" fill="#8B5CF6" font-family="monospace">//  * @param srcPath 原图玉影之所在</text>
+  <text x="80" y="270" font-size="16" fill="#8B5CF6" font-family="monospace">//  * @returns 缩略之图径</text>
+  <text x="80" y="300" font-size="16" fill="#a0a0c0" font-family="monospace">//  */</text>
+  <text x="80" y="340" font-size="16" fill="#e0e0e0" font-family="monospace">function generateThumbnail(srcPath, width) {</text>
+  <text x="80" y="370" font-size="16" fill="#7ec8e3" font-family="monospace">  // 裁云之技</text>
+  <text x="80" y="400" font-size="16" fill="#e0e0e0" font-family="monospace">  return sharp(srcPath).resize(width).toBuffer();</text>
+  <text x="80" y="430" font-size="16" fill="#e0e0e0" font-family="monospace">}</text>
+</svg>

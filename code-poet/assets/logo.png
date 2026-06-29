@@ -1,0 +1,6 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#1a1a2e"/>
+  <text x="256" y="220" text-anchor="middle" font-size="120" fill="#8B5CF6" font-family="serif">诗</text>
+  <text x="256" y="300" text-anchor="middle" font-size="36" fill="#e0e0e0" font-family="sans-serif">代码诗人</text>
+  <text x="256" y="340" text-anchor="middle" font-size="18" fill="#888" font-family="sans-serif">Code Poet</text>
+</svg>

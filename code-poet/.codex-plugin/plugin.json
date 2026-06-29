@@ -1,0 +1,39 @@
+{
+  "name": "code-poet",
+  "version": "1.0.0",
+  "description": "为代码注入诗意——让 AI 生成极富文采的注释、提交信息和文档",
+  "author": {
+    "name": "Code Poet Studio",
+    "email": "code-poet@example.com",
+    "url": "https://github.com/code-poet"
+  },
+  "homepage": "https://code-poet.dev",
+  "repository": "https://github.com/code-poet/code-poet-plugin",
+  "license": "MIT",
+  "keywords": ["poetry", "chinese", "comments", "documentation", "creative"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "代码诗人",
+    "shortDescription": "为代码注入诗意的力量 ✨",
+    "longDescription": "代码诗人是一款极富创意的 Codex 插件，它能将中国古典诗词之美融入日常开发工作流。\n\n• 诗韵注释：为函数、类和方法自动生成古风盎然的注释\n• 雅致提交：生成文采斐然的 Git 提交信息\n• 篇章标题：用诗词为代码区块创建优雅的分隔标题\n• 双语言支持：中英文双语输出，全球开发者皆可使用\n\n让每一行代码都成为一首诗。",
+    "developerName": "Code Poet Studio",
+    "category": "Developer Tools",
+    "capabilities": ["Interactive"],
+    "websiteURL": "https://code-poet.dev",
+    "privacyPolicyURL": "https://code-poet.dev/privacy",
+    "termsOfServiceURL": "https://code-poet.dev/terms",
+    "defaultPrompt": [
+      "用古诗风格给这段代码写注释",
+      "生成一个文雅的 commit message",
+      "帮我给代码块加个诗意的标题分隔"
+    ],
+    "brandColor": "#8B5CF6",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png",
+    "screenshots": [
+      "./assets/screenshot1.png",
+      "./assets/screenshot2.png"
+    ]
+  }
+}

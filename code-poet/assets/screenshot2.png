@@ -1,0 +1,10 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#1e1e2e"/>
+  <rect x="50" y="50" width="700" height="500" fill="#2d2d44" rx="8"/>
+  <text x="400" y="120" text-anchor="middle" font-size="28" fill="#8B5CF6" font-family="monospace">代码诗人 — 雅致提交</text>
+  <text x="80" y="180" font-size="16" fill="#a0a0c0" font-family="monospace">$ git commit -m "</text>
+  <text x="80" y="220" font-size="16" fill="#98d8a0" font-family="monospace">fix(auth): 修竹移影——适配移动端登录布局</text>
+  <text x="80" y="260" font-size="16" fill="#98d8a0" font-family="monospace">"</text>
+  <text x="80" y="310" font-size="16" fill="#888" font-family="monospace"># 登录之页，移于方寸之屏</text>
+  <text x="80" y="340" font-size="16" fill="#888" font-family="monospace"># 修竹之姿，应于掌中之器</text>
+</svg>

@@ -1,0 +1,55 @@
+﻿{
+  "name": "code-poet",
+  "displayName": "代码诗人 - Code Poet",
+  "version": "1.0.0",
+  "description": "为代码注入诗意——生成古风注释、雅致提交信息、诗词标题",
+  "publisher": "code-poet-studio",
+  "icon": "assets/icon.png",
+  "repository": "https://github.com/huvubb/code-poet",
+  "license": "MIT",
+  "categories": ["Other", "Formatters"],
+  "keywords": ["poetry", "chinese", "comments", "comment", "beautify", "commit"],
+  "engines": { "vscode": "^1.80.0" },
+  "activationEvents": [],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "code-poet.poeticComment",
+        "title": "代码诗人: 诗韵注释"
+      },
+      {
+        "command": "code-poet.poeticCommit",
+        "title": "代码诗人: 雅致提交"
+      },
+      {
+        "command": "code-poet.poeticHeader",
+        "title": "代码诗人: 篇章标题"
+      },
+      {
+        "command": "code-poet.switchStyle",
+        "title": "代码诗人: 切换风格"
+      }
+    ],
+    "configuration": {
+      "title": "代码诗人",
+      "properties": {
+        "codePoet.style": {
+          "type": "string",
+          "default": "tang-song",
+          "enum": ["tang-song", "wei-jin", "modern", "humor"],
+          "enumDescriptions": [
+            "唐宋风 — 唐诗宋词名句 + 仿写",
+            "魏晋风 — 清雅飘逸，山水意象",
+            "现代诗 — 白话自由诗风",
+            "打油诗 — 幽默诙谐"
+          ],
+          "description": "创作风格"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "echo OK"
+  }
+}

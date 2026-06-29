@@ -1,0 +1,65 @@
+﻿name: "代码诗人 · Code Poet"
+description: "为代码注入诗意——自动生成古风注释和雅致提交信息"
+author: "Code Poet Studio"
+branding:
+  icon: "edit-3"
+  color: "purple"
+
+inputs:
+  style:
+    description: "创作风格"
+    required: false
+    default: "tang-song"
+    options: ["tang-song", "wei-jin", "modern", "humor"]
+  type:
+    description: "生成类型"
+    required: false
+    default: "comment"
+    options: ["comment", "commit", "header"]
+  message:
+    description: "提交时的改动描述（仅 type=commit 时使用）"
+    required: false
+    default: ""
+
+outputs:
+  result:
+    description: "生成的诗意文本"
+
+runs:
+  using: "composite"
+  steps:
+    - name: 代码诗人 · 生成诗意文本
+      shell: bash
+      run: |
+        STYLE="${{ inputs.style }}"
+        TYPE="${{ inputs.type }}"
+        MSG="${{ inputs.message }}"
+
+        STYLE_MAP=(
+          ["tang-song"]="唐宋风"
+          ["wei-jin"]="魏晋风"
+          ["modern"]="现代诗"
+          ["humor"]="打油诗"
+        )
+
+        STYLE_NAME="${STYLE_MAP[$STYLE]}"
+
+        if [ "$TYPE" = "comment" ]; then
+          cat << 'EOF'
+        /**
+         * [${STYLE_NAME}] ✨ 裁云镂月 · 代码生辉
+         * 将以上注释复制到 AI 中即可获得完整诗意注释
+         */
+        EOF
+        elif [ "$TYPE" = "commit" ]; then
+          echo "[${STYLE_NAME}] ✨ ${MSG:-改了一处代码}"
+          echo ""
+          echo "# 将以上信息复制到 AI 中生成完整诗意提交"
+        else
+          echo "============================================="
+          echo "｜  ${STYLE_NAME} · 天工开物 · 配置之章"
+          echo "============================================="
+        fi
+
+        echo ""
+        echo "💡 风格: ${STYLE_NAME} | 定价: ¥10"

@@ -1,4 +1,4 @@
-﻿const vscode = require("vscode");
+const vscode = require("vscode");
 
 const STYLES = {
   "tang-song": "唐宋风",

@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env node
+#!/usr/bin/env node
 
 const STYLES = {
   "tang-song": "唐宋风",

@@ -1,4 +1,4 @@
-﻿name: 发布
+﻿name: 发布 Release
 
 on:
   push:
@@ -6,10 +6,9 @@ on:
       - "v*"
 
 jobs:
-  publish-github-pkg:
+  release:
     runs-on: ubuntu-latest
     permissions:
-      packages: write
       contents: write
     steps:
       - uses: actions/checkout@v4
@@ -17,14 +16,21 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-          registry-url: "https://npm.pkg.github.com"
 
-      - name: 发布 @huvubb/code-poet-cli
+      - name: 打包 CLI
         working-directory: code-poet-cli
+        run: npm pack
+
+      - name: 打包 VS Code
+        working-directory: code-poet-vscode
         run: |
-          npm pkg set name="@huvubb/code-poet"
-          npm pkg set repository="https://github.com/huvubb/code-poet"
-          npm version ${{ github.ref_name }} --no-git-tag-version
-          npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          npm install -g @vscode/vsce
+          vsce package
+
+      - name: 发布 Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            code-poet-cli/*.tgz
+            code-poet-vscode/*.vsix
+          generate_release_notes: true

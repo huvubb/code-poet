@@ -1,10 +1,10 @@
-﻿# 代码诗人 · Code Poet
+# 代码诗人 · Code Poet
 
 > 为代码注入诗意 ✨ — 全平台 ¥10 买断
 
 [![Version](https://img.shields.io/badge/version-1.0.0-purple)](https://github.com/huvubb/code-poet/releases)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
-[![Price](https://img.shields.io/badge/price-%C2%A510-red)](https://afdian.com/a/code-poet)
+[![Price](https://img.shields.io/badge/price-%C2%A510-red)](https://ifdian.net/a/nongfu)
 
 一款将中国古典诗词之美融入程序开发的创意工具，支持五大平台。
 
@@ -22,7 +22,7 @@
 
 扫码或点击购买链接获取全平台安装包：
 
-👉 **[立即购买](https://afdian.com/a/code-poet)**
+👉 **[立即购买](https://ifdian.net/a/nongfu)**
 
 购买后解锁：
 - ✅ CLI 工具 `.tgz` 安装包

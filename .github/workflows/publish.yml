@@ -1,0 +1,40 @@
+﻿name: 发布到 npm
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: 发布 code-poet-cli
+        working-directory: code-poet-cli
+        run: |
+          npm version ${{ github.ref_name }} --no-git-tag-version
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-vscode:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: 发布 VS Code 扩展
+        working-directory: code-poet-vscode
+        run: |
+          npm install -g @vscode/vsce
+          vsce publish -p ${{ secrets.VSCE_TOKEN }}

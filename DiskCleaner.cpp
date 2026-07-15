@@ -3575,7 +3575,7 @@ void ChooseLanguage() {
     }
     if (g_langCount % cols != 0) std::cout << "\n";
 
-    std::cout << "\n  Enter language code (e.g. en, zh, ja, ko...): ";
+    std::cout << "\n  Enter code from list above (e.g. en, zh): ";
     std::string input;
     std::getline(std::cin, input);
 

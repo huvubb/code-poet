@@ -3569,7 +3569,7 @@ void ChooseLanguage() {
     int cols = 5;
     for (int i = 0; i < g_langCount; i++) {
         char buf[64];
-        snprintf(buf, sizeof(buf), "  %-22s", g_langs[i].name);
+        snprintf(buf, sizeof(buf), "  %-5s %-15s", g_langs[i].code, g_langs[i].name);
         std::cout << buf;
         if ((i + 1) % cols == 0) std::cout << "\n";
     }

@@ -153,7 +153,7 @@ const Lang L_en = {
 };
 
 // Traditional Chinese
-const Lang L_zhTW = {
+const Lang L_cnTW = {
     "C碟垃圾清理工具  v1.5.0",
     "免 責 聲 明",
     "本工具免費提供，僅供個人清理系統垃圾使用。",
@@ -3413,7 +3413,7 @@ struct LangInfo {
 const LangInfo g_langs[51] = {
     {"en", "English", &L_en},
     {"zh", "\u7b80\u4f53\u4e2d\u6587", &L_zh},
-    {"zh-TW", "\u7e41\u9ad4\u4e2d\u6587", &L_zhTW},
+    {"cn-TW", "\u7e41\u9ad4\u4e2d\u6587", &L_cnTW},
     {"ja", "Japanese", &L_ja},
     {"ko", "Korean", &L_ko},
     {"vi", "Vietnamese", &L_vi},

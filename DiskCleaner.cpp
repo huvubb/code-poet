@@ -3413,7 +3413,7 @@ struct LangInfo {
 const LangInfo g_langs[51] = {
     {"en", "English", &L_en},
     {"zh", "\u7b80\u4f53\u4e2d\u6587", &L_zh},
-    {"cn-TW", "\u7e41\u9ad4\u4e2d\u6587", &L_cnTW},
+    {"cn-tw", "\u7e41\u9ad4\u4e2d\u6587", &L_cnTW},
     {"ja", "Japanese", &L_ja},
     {"ko", "Korean", &L_ko},
     {"vi", "Vietnamese", &L_vi},

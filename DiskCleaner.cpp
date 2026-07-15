@@ -84,6 +84,7 @@ struct Lang {
     const char* name_wer;
     const char* name_win_logs;
     const char* path_not_found;
+    const char* contrib;
 };
 
 
@@ -150,6 +151,7 @@ const Lang L_en = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 // Traditional Chinese
@@ -216,6 +218,7 @@ const Lang L_cnTW = {
     "Windows 錯誤報告",
     "Windows 日誌",
     "路徑不存在，跳過。"
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_zh = {
@@ -281,6 +284,7 @@ const Lang L_zh = {
     "Windows 错误报告",
     "Windows 日志",
     "路径不存在，跳过。",
+    "",
 };
 
 const Lang L_ja = {
@@ -346,6 +350,7 @@ const Lang L_ja = {
     "Windowsエラー報告",
     "Windowsログ",
     "パスが見つかりません。スキップ。",
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!",
 };
 
 const Lang L_ko = {
@@ -411,6 +416,7 @@ const Lang L_ko = {
     "Windows 오류 보고",
     "Windows 로그",
     "경로를 찾을 수 없습니다. 건너뛰.",
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!",
 };
 
 const Lang L_vi = {
@@ -476,6 +482,7 @@ const Lang L_vi = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_th = {
@@ -541,6 +548,7 @@ const Lang L_th = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_hi = {
@@ -606,6 +614,7 @@ const Lang L_hi = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_bn = {
@@ -671,6 +680,7 @@ const Lang L_bn = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_id = {
@@ -736,6 +746,7 @@ const Lang L_id = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_ms = {
@@ -801,6 +812,7 @@ const Lang L_ms = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_tl = {
@@ -866,6 +878,7 @@ const Lang L_tl = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_ur = {
@@ -931,6 +944,7 @@ const Lang L_ur = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_ta = {
@@ -996,6 +1010,7 @@ const Lang L_ta = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_te = {
@@ -1061,6 +1076,7 @@ const Lang L_te = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_mr = {
@@ -1126,6 +1142,7 @@ const Lang L_mr = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_gu = {
@@ -1191,6 +1208,7 @@ const Lang L_gu = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_kn = {
@@ -1256,6 +1274,7 @@ const Lang L_kn = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_pa = {
@@ -1321,6 +1340,7 @@ const Lang L_pa = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_es = {
@@ -1386,6 +1406,7 @@ const Lang L_es = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_fr = {
@@ -1451,6 +1472,7 @@ const Lang L_fr = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_de = {
@@ -1516,6 +1538,7 @@ const Lang L_de = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_it = {
@@ -1581,6 +1604,7 @@ const Lang L_it = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_pt = {
@@ -1646,6 +1670,7 @@ const Lang L_pt = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_ru = {
@@ -1711,6 +1736,7 @@ const Lang L_ru = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_pl = {
@@ -1776,6 +1802,7 @@ const Lang L_pl = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_nl = {
@@ -1841,6 +1868,7 @@ const Lang L_nl = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_sv = {
@@ -1906,6 +1934,7 @@ const Lang L_sv = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_no = {
@@ -1971,6 +2000,7 @@ const Lang L_no = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_da = {
@@ -2036,6 +2066,7 @@ const Lang L_da = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_fi = {
@@ -2101,6 +2132,7 @@ const Lang L_fi = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_el = {
@@ -2166,6 +2198,7 @@ const Lang L_el = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_cs = {
@@ -2231,6 +2264,7 @@ const Lang L_cs = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_hu = {
@@ -2296,6 +2330,7 @@ const Lang L_hu = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_ro = {
@@ -2361,6 +2396,7 @@ const Lang L_ro = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_uk = {
@@ -2426,6 +2462,7 @@ const Lang L_uk = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_tr = {
@@ -2491,6 +2528,7 @@ const Lang L_tr = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_ca = {
@@ -2556,6 +2594,7 @@ const Lang L_ca = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_ar = {
@@ -2621,6 +2660,7 @@ const Lang L_ar = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_he = {
@@ -2686,6 +2726,7 @@ const Lang L_he = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_fa = {
@@ -2751,6 +2792,7 @@ const Lang L_fa = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_sw = {
@@ -2816,6 +2858,7 @@ const Lang L_sw = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_eo = {
@@ -2881,6 +2924,7 @@ const Lang L_eo = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_lt = {
@@ -2946,6 +2990,7 @@ const Lang L_lt = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_lv = {
@@ -3011,6 +3056,7 @@ const Lang L_lv = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_sk = {
@@ -3076,6 +3122,7 @@ const Lang L_sk = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_sl = {
@@ -3141,6 +3188,7 @@ const Lang L_sl = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_bg = {
@@ -3206,6 +3254,7 @@ const Lang L_bg = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_sr = {
@@ -3271,6 +3320,7 @@ const Lang L_sr = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_hr = {
@@ -3336,6 +3386,7 @@ const Lang L_hr = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 const Lang L_et = {
@@ -3401,6 +3452,7 @@ const Lang L_et = {
     "Windows Error Reports",
     "Windows Logs",
     "Path not found, skipped."
+    "WeChat: forever870422  Email: 810372789@qq.com  |  Welcome translation contributions!"
 };
 
 
@@ -3608,6 +3660,10 @@ bool ShowDisclaimer(bool isAdmin) {
     std::cout << "|  " << g_lang->scope_line1 << "  |\n";
     std::cout << "|  " << g_lang->scope_line2 << "  |\n";
     std::cout << "+------------------------------------------------------+\n";
+
+    if (strlen(g_lang->contrib) > 0) {
+        std::cout << "\n  " << g_lang->contrib << "\n";
+    }
 
     if (isAdmin)
         std::cout << "\n  >> " << g_lang->mode_admin << "\n";

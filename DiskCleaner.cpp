@@ -13,15 +13,214 @@
 namespace fs = std::filesystem;
 
 // ============================================================
-//  免责声明
+//  Disclaimer
 // ============================================================
-//  本工具免费提供，仅供个人清理 Windows 系统垃圾文件使用。
-//  使用前请关闭重要程序并备份数据。本软件不包含任何
-//  恶意代码，但无法保证在所有环境下绝对安全。
-//  使用即视为您已阅读并同意：开发者对可能发生的
-//  任何直接或间接损失不承担责任。
+//  This tool is free for personal Windows cleanup use.
+//  Close important programs and back up data before use.
+//  This software contains no malware, but absolute safety
+//  in all environments is not guaranteed.
+//  By using this tool you agree: the developer is not liable
+//  for any direct or indirect damages (data loss, etc.).
 // ============================================================
 
+struct Lang {
+    const char* title;
+    const char* disclaimer;
+    const char* disc_line1;
+    const char* disc_line2;
+    const char* disc_line3;
+    const char* disc_line4;
+    const char* disc_line5;
+    const char* scope_line1;
+    const char* scope_line2;
+    const char* mode_admin;
+    const char* mode_user;
+    const char* mode_user_hint;
+    const char* lang_choose;
+    const char* lang_invalid;
+    const char* prompt_yes;
+    const char* scanning;
+    const char* skipped_admin;
+    const char* total_cleanable;
+    const char* level_label;
+    const char* skipped_count;
+    const char* summary_title;
+    const char* summary_items;
+    const char* summary_size;
+    const char* summary_choose;
+    const char* summary_all;
+    const char* summary_select;
+    const char* summary_no;
+    const char* prompt_mode;
+    const char* prompt_select;
+    const char* select_list_title;
+    const char* select_confirm_title;
+    const char* select_will_clean;
+    const char* select_confirm;
+    const char* no_valid_sel;
+    const char* clean_title;
+    const char* cleaning;
+    const char* freed;
+    const char* done_title;
+    const char* done_freed;
+    const char* done_failed;
+    const char* cancelled;
+    const char* press_enter;
+    const char* no_junk;
+    const char* level_light;
+    const char* level_medium;
+    const char* level_moderate;
+    const char* level_heavy;
+    const char* level_severe;
+    const char* name_user_temp;
+    const char* name_chrome_cache;
+    const char* name_chrome_code;
+    const char* name_edge_cache;
+    const char* name_edge_code;
+    const char* name_firefox_cache;
+    const char* name_thumb_cache;
+    const char* name_win_temp;
+    const char* name_recycle;
+    const char* name_prefetch;
+    const char* name_win_update;
+    const char* name_wer;
+    const char* name_win_logs;
+    const char* path_not_found;
+};
+
+const Lang ZH = {
+    "C盘垃圾清理工具  v1.4.0",
+    "免 责 声 明",
+    "本工具免费提供，仅供个人清理系统垃圾使用。",
+    "使用前请关闭重要程序，并提前备份数据。",
+    "本软件无恶意代码，但无法保证在所有环境绝对安全。",
+    "使用即视为同意：开发者对任何直接或间接损失",
+    "（包括数据丢失、系统损坏等）不承担责任。",
+    "清理范围：Temp / 回收站 / 浏览器缓存 / Prefetch",
+    "         更新缓存 / 错误报告 / 日志 / 缩略图",
+    "[管理员模式] 完整清理 - 全部 13 项可用",
+    "[普通用户模式] 仅清理用户目录垃圾 - 7 项",
+    "以管理员身份运行可解锁全部清理能力",
+    "请选择语言 / Choose language: [1] 中文  [2] English",
+    "无效选择，请输入 1 或 2",
+    "输入 YES 开始扫描，其他任意键退出: ",
+    "正在扫描垃圾文件...",
+    "跳过（需管理员权限）",
+    "总计可清理",
+    "垃圾量评级",
+    "跳过项（需管理员权限）",
+    "扫描报告汇总",
+    "可清理项目",
+    "总大小",
+    "请选择清理方式：",
+    "[A] 全部清理",
+    "[S] 自定义选择",
+    "[N] 不清理，退出",
+    "请输入 A / S / N: ",
+    "请输入要清理的编号（如 1,3-5）: ",
+    "可选项目列表（逗号分隔，支持范围如 3-5）:",
+    "已选择以下项目:",
+    "本次将清理",
+    "确认清理？输入 Y 执行，其他任意键取消: ",
+    "没有有效选择，已取消。",
+    "开始清理垃圾文件...",
+    "清理",
+    "释放",
+    "清理完成 - 汇总报告",
+    "已清理空间",
+    "失败项",
+    "已取消清理。按回车退出...",
+    "按回车退出...",
+    "没有发现可清理的垃圾文件。",
+    "轻度   (< 500 MB)",
+    "中等   (500 MB ~ 2 GB)",
+    "较多   (2 GB ~ 5 GB)",
+    "大量   (5 GB ~ 10 GB)",
+    "严重   (> 10 GB)",
+    "用户 Temp",
+    "Chrome 缓存",
+    "Chrome Code Cache",
+    "Edge 缓存",
+    "Edge Code Cache",
+    "Firefox 缓存",
+    "缩略图缓存",
+    "Windows Temp",
+    "回收站",
+    "预读取文件 (Prefetch)",
+    "Windows 更新缓存",
+    "Windows 错误报告",
+    "Windows 日志",
+    "路径不存在，跳过。"
+};
+
+const Lang EN = {
+    "C Drive Junk Cleaner  v1.4.0",
+    "DISCLAIMER",
+    "This tool is free for personal Windows cleanup use.",
+    "Close important programs and back up data before use.",
+    "This software contains no malware, but absolute safety",
+    "in all environments is not guaranteed.",
+    "By using this tool you agree: the developer is not liable",
+    "Scope: Temp / RecycleBin / Browser Cache / Prefetch",
+    "       Update Cache / Error Reports / Logs / Thumbnails",
+    "[Admin Mode] Full cleanup - all 13 targets available",
+    "[User Mode] User-directory only - 7 targets",
+    "Run as Administrator for full cleanup capability",
+    "Please choose language: [1] Chinese  [2] English",
+    "Invalid choice, enter 1 or 2",
+    "Type YES to start scanning, anything else to exit: ",
+    "Scanning junk files...",
+    "Skipped (requires admin)",
+    "Total cleanable",
+    "Junk level",
+    "Skipped (requires admin)",
+    "Scan Report",
+    "Cleanable items",
+    "Total size",
+    "Choose cleanup mode:",
+    "[A] Clean All",
+    "[S] Select items",
+    "[N] Cancel, exit",
+    "Enter A / S / N: ",
+    "Enter numbers to clean (e.g. 1,3-5): ",
+    "Cleanable items (comma-separated, range like 3-5):",
+    "Selected items:",
+    "Will clean",
+    "Confirm? Enter Y to proceed, anything else to cancel: ",
+    "No valid selection, cancelled.",
+    "Cleaning junk files...",
+    "Cleaning",
+    "Freed",
+    "Cleanup Complete - Summary",
+    "Space Freed",
+    "Failed items",
+    "Cleanup cancelled. Press Enter to exit...",
+    "Press Enter to exit...",
+    "No junk files found to clean.",
+    "Light  (< 500 MB)",
+    "Medium (500 MB ~ 2 GB)",
+    "Moderate (2 GB ~ 5 GB)",
+    "Heavy  (5 GB ~ 10 GB)",
+    "Severe (> 10 GB)",
+    "User Temp",
+    "Chrome Cache",
+    "Chrome Code Cache",
+    "Edge Cache",
+    "Edge Code Cache",
+    "Firefox Cache",
+    "Thumbnail Cache",
+    "Windows Temp",
+    "Recycle Bin",
+    "Prefetch",
+    "Windows Update Cache",
+    "Windows Error Reports",
+    "Windows Logs",
+    "Path not found, skipped."
+};
+
+const Lang* g = &ZH;
+
+// ---------- Utilities ----------
 struct CleanTarget {
     std::string  name;
     std::wstring path;
@@ -44,11 +243,11 @@ std::string FormatSize(ULONGLONG bytes) {
 }
 
 const char* ClassifySize(ULONGLONG bytes) {
-    if (bytes < 500ULL * 1024 * 1024)       return "轻度   (< 500 MB)";
-    if (bytes < 2ULL * 1024 * 1024 * 1024)  return "中等   (500 MB ~ 2 GB)";
-    if (bytes < 5ULL * 1024 * 1024 * 1024)  return "较多   (2 GB ~ 5 GB)";
-    if (bytes < 10ULL * 1024 * 1024 * 1024) return "大量   (5 GB ~ 10 GB)";
-    return                                      "严重   (> 10 GB)";
+    if (bytes < 500ULL * 1024 * 1024)       return g->level_light;
+    if (bytes < 2ULL * 1024 * 1024 * 1024)  return g->level_medium;
+    if (bytes < 5ULL * 1024 * 1024 * 1024)  return g->level_moderate;
+    if (bytes < 10ULL * 1024 * 1024 * 1024) return g->level_heavy;
+    return                                      g->level_severe;
 }
 
 bool IsRunningAsAdmin() {
@@ -57,9 +256,8 @@ bool IsRunningAsAdmin() {
     if (OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &token)) {
         TOKEN_ELEVATION elevation;
         DWORD size = sizeof(TOKEN_ELEVATION);
-        if (GetTokenInformation(token, TokenElevation, &elevation, size, &size)) {
+        if (GetTokenInformation(token, TokenElevation, &elevation, size, &size))
             isAdmin = elevation.TokenIsElevated;
-        }
         CloseHandle(token);
     }
     return isAdmin != FALSE;
@@ -106,42 +304,63 @@ struct ScanResult {
     std::string name;
     ULONGLONG   size;
     bool        skipped;
-    int         index;  // 对应 targets 中的原始索引
+    int         index;
 };
 
-// ---------- 显示免责声明 ----------
-bool ShowDisclaimer(bool isAdmin) {
+// ---------- Language selection ----------
+void ChooseLanguage() {
     system("cls");
     std::cout << R"(
-╔══════════════════════════════════════════════════════╗
-║            C盘垃圾清理工具  v1.3.0                    ║
-╠══════════════════════════════════════════════════════╣
-║                 ⚠️  免 责 声 明  ⚠️                    ║
-║                                                      ║
-║  本软件不提供任何形式的明示或暗示担保。              ║
-║  使用本软件即表示您同意自行承担所有风险。            ║
-║  开发者对因使用本软件导致的数据丢失、                 ║
-║  系统损坏或其他损失概不负责。                         ║
-║                                                      ║
-║  清理范围：Temp / 回收站 / 浏览器缓存 / Prefetch     ║
-║           更新缓存 / 错误报告 / 日志 / 缩略图        ║
-╚══════════════════════════════════════════════════════╝
++------------------------------------------------------+
+|            C Drive Junk Cleaner  v1.4.0               |
+|               C盘垃圾清理工具  v1.4.0                 |
++------------------------------------------------------+
+|                                                      |
+|     [1]  中文  (Chinese)                             |
+|     [2]  English                                     |
+|                                                      |
++------------------------------------------------------+
 )";
+    std::cout << "\n  " << g->lang_choose;
+    std::string input;
+    std::getline(std::cin, input);
+    if (input == "2")      g = &EN;
+    else if (input == "1") g = &ZH;
+}
 
-    if (isAdmin) {
-        std::cout << "\n  🔧 [管理员模式] 可清理全部 13 项\n";
-    } else {
-        std::cout << "\n  👤 [普通用户模式] 可清理 7 项（跳过系统目录）\n";
-        std::cout << "    💡 以管理员身份运行可解锁全部清理能力\n";
+// ---------- Disclaimer ----------
+bool ShowDisclaimer(bool isAdmin) {
+    system("cls");
+    std::cout << "\n";
+    std::cout << "+------------------------------------------------------+\n";
+    std::cout << "|            " << g->title << "                    |\n";
+    std::cout << "+------------------------------------------------------+\n";
+    std::cout << "|                 ** " << g->disclaimer << " **              |\n";
+    std::cout << "|                                                      |\n";
+    std::cout << "|  " << g->disc_line1 << "  |\n";
+    std::cout << "|  " << g->disc_line2 << "  |\n";
+    std::cout << "|  " << g->disc_line3 << "  |\n";
+    std::cout << "|  " << g->disc_line4 << "  |\n";
+    std::cout << "|  " << g->disc_line5 << "  |\n";
+    std::cout << "|                                                      |\n";
+    std::cout << "|  " << g->scope_line1 << "  |\n";
+    std::cout << "|  " << g->scope_line2 << "  |\n";
+    std::cout << "+------------------------------------------------------+\n";
+
+    if (isAdmin)
+        std::cout << "\n  >> " << g->mode_admin << "\n";
+    else {
+        std::cout << "\n  >> " << g->mode_user << "\n";
+        std::cout << "  >> " << g->mode_user_hint << "\n";
     }
 
-    std::cout << "\n👉 输入 YES 开始扫描垃圾文件，其他任意键退出: ";
+    std::cout << "\n  " << g->prompt_yes;
     std::string input;
     std::getline(std::cin, input);
     return (input == "YES" || input == "yes" || input == "Yes");
 }
 
-// ---------- 扫描并生成报告 ----------
+// ---------- Scan ----------
 std::vector<ScanResult> ScanAndReport(const std::vector<CleanTarget>& targets, bool isAdmin) {
     std::vector<ScanResult> results;
     ULONGLONG total = 0;
@@ -149,17 +368,17 @@ std::vector<ScanResult> ScanAndReport(const std::vector<CleanTarget>& targets, b
     int displayIdx = 0;
 
     std::cout << "\n";
-    std::cout << "╔══════════════════════════════════════════╗\n";
-    std::cout << "║         📊 正在扫描垃圾文件...           ║\n";
-    std::cout << "╚══════════════════════════════════════════╝\n\n";
+    std::cout << "+--------------------------------------+\n";
+    std::cout << "|         " << g->scanning << "         |\n";
+    std::cout << "+--------------------------------------+\n\n";
 
     for (int i = 0; i < (int)targets.size(); i++) {
         auto& t = targets[i];
         if (t.requiresAdmin && !isAdmin) {
             results.push_back({t.name, 0, true, i});
             g_totalSkipped++;
-            std::cout << "  ⏭  " << std::setw(28) << std::left << t.name
-                      << " 跳过（需管理员权限）\n";
+            std::cout << "  (X) " << std::setw(28) << std::left << t.name
+                      << g->skipped_admin << "\n";
             continue;
         }
         ULONGLONG size = ScanFolder(t.path);
@@ -171,87 +390,74 @@ std::vector<ScanResult> ScanAndReport(const std::vector<CleanTarget>& targets, b
                   << " " << FormatSize(size) << "\n";
     }
 
-    std::cout << "\n  ─────────────────────────────────────\n";
-    std::cout << "  📦 总计可清理 : " << FormatSize(total) << "\n";
-    std::cout << "  📊 垃圾量评级 : " << ClassifySize(total) << "\n";
-    if (g_totalSkipped > 0) {
-        std::cout << "  ⏭  跳过 " << g_totalSkipped << " 项（需管理员权限）\n";
-    }
-
+    std::cout << "\n  ------------------------------------\n";
+    std::cout << "  " << g->total_cleanable << " : " << FormatSize(total) << "\n";
+    std::cout << "  " << g->level_label << " : " << ClassifySize(total) << "\n";
+    if (g_totalSkipped > 0)
+        std::cout << "  " << g->skipped_count << " : " << g_totalSkipped << "\n";
     return results;
 }
 
-// ---------- 解析用户输入的选择编号 ----------
+// ---------- Parse selection ----------
 std::set<int> ParseSelection(const std::string& input, int maxNum) {
-    std::set<int> indices;  // 这里存的是用户看到的编号(1-based)
+    std::set<int> indices;
     std::stringstream ss(input);
     std::string token;
     while (std::getline(ss, token, ',')) {
-        // 去掉首尾空格
         size_t start = token.find_first_not_of(" \t");
         size_t end   = token.find_last_not_of(" \t");
         if (start == std::string::npos) continue;
         token = token.substr(start, end - start + 1);
-
-        // 处理范围如 "3-5"
         size_t dash = token.find('-');
         if (dash != std::string::npos && dash > 0 && dash < token.size() - 1) {
             try {
                 int from = std::stoi(token.substr(0, dash));
                 int to   = std::stoi(token.substr(dash + 1));
                 if (from > to) std::swap(from, to);
-                for (int i = from; i <= to; i++) {
+                for (int i = from; i <= to; i++)
                     if (i >= 1 && i <= maxNum) indices.insert(i);
-                }
-            } catch (...) { continue; }
+            } catch (...) {}
         } else {
             try {
                 int n = std::stoi(token);
                 if (n >= 1 && n <= maxNum) indices.insert(n);
-            } catch (...) { continue; }
+            } catch (...) {}
         }
     }
     return indices;
 }
 
-// ---------- 询问清理方式 ----------
-// 返回: 0=全部, 1=选择, -1=退出
-// 如果选择模式，selectedDisplayNums 存储用户选择的显示编号
+// ---------- Ask cleanup mode ----------
 int AskCleanMode(const std::vector<ScanResult>& results,
                  std::set<int>& selectedDisplayNums) {
     int cleanable = 0;
     ULONGLONG total = 0;
     for (auto& r : results) {
-        if (!r.skipped && r.size > 0) {
-            cleanable++;
-            total += r.size;
-        }
+        if (!r.skipped && r.size > 0) { cleanable++; total += r.size; }
     }
 
     std::cout << "\n";
-    std::cout << "╔══════════════════════════════════════════╗\n";
-    std::cout << "║           📋 扫描报告汇总                ║\n";
-    std::cout << "╠══════════════════════════════════════════╣\n";
+    std::cout << "+--------------------------------------+\n";
+    std::cout << "|         " << g->summary_title << "         |\n";
+    std::cout << "+--------------------------------------+\n";
 
     if (cleanable == 0) {
-        std::cout << "║  没有发现可清理的垃圾文件。              ║\n";
-        std::cout << "╚══════════════════════════════════════════╝\n";
-        std::cout << "\n按回车退出...";
+        std::cout << "|  " << g->no_junk << "  |\n";
+        std::cout << "+--------------------------------------+\n";
+        std::cout << "\n" << g->press_enter;
         std::cin.get();
         return -1;
     }
 
-    std::cout << "║  可清理项目 : " << std::setw(2) << cleanable << " 项"
-              << "                     ║\n";
-    std::cout << "║  总计大小   : " << FormatSize(total)
-              << "                  ║\n";
-    std::cout << "╠══════════════════════════════════════════╣\n";
-    std::cout << "║  请选择清理方式：                        ║\n";
-    std::cout << "║  [A] 全部清理                            ║\n";
-    std::cout << "║  [S] 自定义选择（输入编号）              ║\n";
-    std::cout << "║  [N] 不清理，安全退出                    ║\n";
-    std::cout << "╚══════════════════════════════════════════╝\n";
-    std::cout << "\n👉 请输入 A / S / N: ";
+    std::cout << "|  " << g->summary_items << " : " << std::setw(2) << cleanable << "                         |\n";
+    std::cout << "|  " << g->summary_size << " : " << FormatSize(total) << "                    |\n";
+    std::cout << "+--------------------------------------+\n";
+    std::cout << "|  " << g->summary_choose << "   |\n";
+    std::cout << "|  " << g->summary_all << "                     |\n";
+    std::cout << "|  " << g->summary_select << "               |\n";
+    std::cout << "|  " << g->summary_no << "                   |\n";
+    std::cout << "+--------------------------------------+\n";
+    std::cout << "\n" << g->prompt_mode;
 
     std::string input;
     std::getline(std::cin, input);
@@ -259,8 +465,7 @@ int AskCleanMode(const std::vector<ScanResult>& results,
     if (input == "A" || input == "a") return 0;
     if (input == "N" || input == "n") return -1;
     if (input == "S" || input == "s") {
-        // 显示编号列表供选择
-        std::cout << "\n  可清理项目列表（输入编号，逗号分隔，如 1,3-5,7）:\n\n";
+        std::cout << "\n  " << g->select_list_title << "\n\n";
         int displayIdx = 0;
         for (auto& r : results) {
             if (!r.skipped) {
@@ -270,35 +475,31 @@ int AskCleanMode(const std::vector<ScanResult>& results,
                           << " " << FormatSize(r.size) << "\n";
             }
         }
-        std::cout << "\n👉 请输入要清理的编号（如 1,3-5）: ";
-
+        std::cout << "\n" << g->prompt_select;
         std::string selInput;
         std::getline(std::cin, selInput);
-
         selectedDisplayNums = ParseSelection(selInput, displayIdx);
         if (selectedDisplayNums.empty()) {
-            std::cout << "\n  ❌ 没有有效的选择，已取消。\n";
+            std::cout << "\n  " << g->no_valid_sel << "\n";
             return -1;
         }
-
-        // 显示确认
         ULONGLONG selTotal = 0;
         int selCount = 0;
         displayIdx = 0;
-        std::cout << "\n  已选择清理以下项目:\n";
+        std::cout << "\n  " << g->select_confirm_title << "\n";
         for (auto& r : results) {
             if (!r.skipped) {
                 displayIdx++;
                 if (selectedDisplayNums.count(displayIdx)) {
                     selCount++;
                     selTotal += r.size;
-                    std::cout << "    ✓ " << r.name << " (" << FormatSize(r.size) << ")\n";
+                    std::cout << "    > " << r.name << " (" << FormatSize(r.size) << ")\n";
                 }
             }
         }
-        std::cout << "\n  📦 本次将清理 " << selCount << " 项，共 " << FormatSize(selTotal) << "\n";
-        std::cout << "👉 确认清理？输入 Y 执行，其他任意键取消: ";
-
+        std::cout << "\n  " << g->select_will_clean << " " << selCount
+                  << " items, " << FormatSize(selTotal) << "\n";
+        std::cout << g->select_confirm;
         std::string confirm;
         std::getline(std::cin, confirm);
         if (confirm == "Y" || confirm == "y") return 1;
@@ -306,25 +507,23 @@ int AskCleanMode(const std::vector<ScanResult>& results,
     return -1;
 }
 
-// ---------- 执行清理（支持筛选） ----------
+// ---------- Execute cleanup ----------
 void ExecuteClean(const std::vector<CleanTarget>& targets, bool isAdmin,
                   const std::set<int>* filterDisplayNums,
                   const std::vector<ScanResult>& results) {
     std::cout << "\n";
-    std::cout << "╔══════════════════════════════════════════╗\n";
-    std::cout << "║         🧹 开始清理垃圾文件...           ║\n";
-    std::cout << "╚══════════════════════════════════════════╝\n";
+    std::cout << "+--------------------------------------+\n";
+    std::cout << "|       " << g->clean_title << "       |\n";
+    std::cout << "+--------------------------------------+\n";
 
-    // 构建显示编号 -> 结果索引 的映射
     std::set<int> targetIndices;
     if (filterDisplayNums) {
         int dispIdx = 0;
         for (int ri = 0; ri < (int)results.size(); ri++) {
             if (!results[ri].skipped) {
                 dispIdx++;
-                if (filterDisplayNums->count(dispIdx)) {
+                if (filterDisplayNums->count(dispIdx))
                     targetIndices.insert(results[ri].index);
-                }
             }
         }
     }
@@ -333,12 +532,12 @@ void ExecuteClean(const std::vector<CleanTarget>& targets, bool isAdmin,
     for (int i = 0; i < (int)targets.size(); i++) {
         auto& t = targets[i];
         if (t.requiresAdmin && !isAdmin) continue;
-        // 如果是选择模式，跳过未选中的
         if (filterDisplayNums && !targetIndices.count(i)) continue;
 
-        std::cout << "\n  清理 " << t.name << " ...\n";
+        std::cout << "\n  " << g->cleaning << " " << t.name << " ...\n";
         ULONGLONG before = totalFreed;
-        if (t.name.find("回收站") != std::string::npos) {
+        if (t.name.find("回收站") != std::string::npos ||
+            t.name.find("Recycle") != std::string::npos) {
             std::wstring rp = L"C:\\$Recycle.Bin";
             std::error_code ec;
             if (fs::exists(fs::path(rp), ec)) {
@@ -356,35 +555,33 @@ void ExecuteClean(const std::vector<CleanTarget>& targets, bool isAdmin,
             totalFreed += DeleteFolder(t.path);
         }
         ULONGLONG diff = totalFreed - before;
-        std::cout << "    ✅ 释放 " << FormatSize(diff) << "\n";
+        std::cout << "    -> " << g->freed << " " << FormatSize(diff) << "\n";
     }
 
     g_totalDeleted = totalFreed;
-
     std::cout << "\n";
-    std::cout << "╔══════════════════════════════════════════╗\n";
-    std::cout << "║         ✅ 清理完成 - 汇总报告           ║\n";
-    std::cout << "╠══════════════════════════════════════════╣\n";
-    std::cout << "║  已清理空间 : " << std::setw(14) << FormatSize(g_totalDeleted) << "  ║\n";
-    std::cout << "║  失败项     : " << std::setw(14) << g_totalFailed << "  ║\n";
-    std::cout << "╚══════════════════════════════════════════╝\n";
+    std::cout << "+--------------------------------------+\n";
+    std::cout << "|       " << g->done_title << "       |\n";
+    std::cout << "+--------------------------------------+\n";
+    std::cout << "|  " << g->done_freed << " : " << std::setw(12) << FormatSize(g_totalDeleted) << "  |\n";
+    std::cout << "|  " << g->done_failed << " : " << std::setw(12) << g_totalFailed << "  |\n";
+    std::cout << "+--------------------------------------+\n";
 }
 
-// ---------- 主入口 ----------
+// ---------- Main ----------
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
 
+    ChooseLanguage();
     bool isAdmin = IsRunningAsAdmin();
 
-    // 第一步：免责声明
     if (!ShowDisclaimer(isAdmin)) {
-        std::cout << "\n已取消。按回车退出...";
+        std::cout << "\n" << g->cancelled;
         std::cin.get();
         return 0;
     }
 
-    // 构建清理目标
     wchar_t userProfile[MAX_PATH];
     wchar_t localAppData[MAX_PATH];
     GetEnvironmentVariableW(L"USERPROFILE", userProfile, MAX_PATH);
@@ -393,47 +590,37 @@ int main() {
     std::wstring local(localAppData);
 
     std::vector<CleanTarget> targets = {
-        // ---- 无需管理员权限 ----
-        {"用户 Temp",              profile + L"\\AppData\\Local\\Temp", true, false},
-        {"Chrome 缓存",            local + L"\\Google\\Chrome\\User Data\\Default\\Cache", true, false},
-        {"Chrome Code Cache",      local + L"\\Google\\Chrome\\User Data\\Default\\Code Cache", true, false},
-        {"Edge 缓存",              local + L"\\Microsoft\\Edge\\User Data\\Default\\Cache", true, false},
-        {"Edge Code Cache",        local + L"\\Microsoft\\Edge\\User Data\\Default\\Code Cache", true, false},
-        {"Firefox 缓存",           local + L"\\Mozilla\\Firefox\\Profiles", true, false},
-        {"缩略图缓存",             profile + L"\\AppData\\Local\\Microsoft\\Windows\\Explorer", true, false},
-
-        // ---- 需要管理员权限 ----
-        {"Windows Temp",           L"C:\\Windows\\Temp", true, true},
-        {"回收站",                 L"C:\\$Recycle.Bin", true, true},
-        {"预读取文件 (Prefetch)",   L"C:\\Windows\\Prefetch", true, true},
-        {"Windows 更新缓存",        L"C:\\Windows\\SoftwareDistribution\\Download", true, true},
-        {"Windows 错误报告",        L"C:\\ProgramData\\Microsoft\\Windows\\WER", true, true},
-        {"Windows 日志",           L"C:\\Windows\\Logs", true, true},
+        {g->name_user_temp,       profile + L"\\AppData\\Local\\Temp", true, false},
+        {g->name_chrome_cache,    local + L"\\Google\\Chrome\\User Data\\Default\\Cache", true, false},
+        {g->name_chrome_code,     local + L"\\Google\\Chrome\\User Data\\Default\\Code Cache", true, false},
+        {g->name_edge_cache,      local + L"\\Microsoft\\Edge\\User Data\\Default\\Cache", true, false},
+        {g->name_edge_code,       local + L"\\Microsoft\\Edge\\User Data\\Default\\Code Cache", true, false},
+        {g->name_firefox_cache,   local + L"\\Mozilla\\Firefox\\Profiles", true, false},
+        {g->name_thumb_cache,     profile + L"\\AppData\\Local\\Microsoft\\Windows\\Explorer", true, false},
+        {g->name_win_temp,        L"C:\\Windows\\Temp", true, true},
+        {g->name_recycle,         L"C:\\$Recycle.Bin", true, true},
+        {g->name_prefetch,        L"C:\\Windows\\Prefetch", true, true},
+        {g->name_win_update,      L"C:\\Windows\\SoftwareDistribution\\Download", true, true},
+        {g->name_wer,             L"C:\\ProgramData\\Microsoft\\Windows\\WER", true, true},
+        {g->name_win_logs,        L"C:\\Windows\\Logs", true, true},
     };
 
-    // 第二步：扫描并生成报告（带编号）
     auto results = ScanAndReport(targets, isAdmin);
 
-    // 第三步：询问清理方式
     std::set<int> selectedNums;
     int mode = AskCleanMode(results, selectedNums);
-
     if (mode == -1) {
-        std::cout << "\n已取消清理。按回车退出...";
+        std::cout << "\n" << g->cancelled;
         std::cin.get();
         return 0;
     }
 
-    // 第四步：执行清理
-    if (mode == 0) {
-        // 全部清理
+    if (mode == 0)
         ExecuteClean(targets, isAdmin, nullptr, results);
-    } else if (mode == 1) {
-        // 选择清理
+    else
         ExecuteClean(targets, isAdmin, &selectedNums, results);
-    }
 
-    std::cout << "\n按回车退出...";
+    std::cout << "\n" << g->press_enter;
     std::cin.get();
     return 0;
 }

@@ -17,16 +17,17 @@ namespace fs = std::filesystem;
 // ============================================================
 
 struct CleanTarget {
-    std::string name;
-    std::string path;
-    bool        isFolder;
-    bool        requiresAdmin;
+    std::string  name;       // 显示名（UTF-8）
+    std::wstring path;       // 路径（宽字符，支持中文）
+    bool         isFolder;
+    bool         requiresAdmin;
 };
 
-ULONGLONG g_totalDeleted = 0;
-ULONGLONG g_totalFailed  = 0;
-ULONGLONG g_totalSkipped = 0;
+ULONGLONG g_totalDeleted  = 0;
+ULONGLONG g_totalFailed   = 0;
+int       g_totalSkipped  = 0;
 
+// ---------- 格式化字节 ----------
 std::string FormatSize(ULONGLONG bytes) {
     const char* units[] = { "B", "KB", "MB", "GB", "TB" };
     int idx = 0;
@@ -37,6 +38,16 @@ std::string FormatSize(ULONGLONG bytes) {
     return buf;
 }
 
+// ---------- 垃圾量分级 ----------
+const char* ClassifySize(ULONGLONG bytes) {
+    if (bytes < 500ULL * 1024 * 1024)       return "轻度   (< 500 MB)";
+    if (bytes < 2ULL * 1024 * 1024 * 1024)  return "中等   (500 MB ~ 2 GB)";
+    if (bytes < 5ULL * 1024 * 1024 * 1024)  return "较多   (2 GB ~ 5 GB)";
+    if (bytes < 10ULL * 1024 * 1024 * 1024) return "大量   (5 GB ~ 10 GB)";
+    return                                      "严重   (> 10 GB)";
+}
+
+// ---------- 管理员检测 ----------
 bool IsRunningAsAdmin() {
     BOOL isAdmin = FALSE;
     HANDLE token = nullptr;
@@ -51,85 +62,124 @@ bool IsRunningAsAdmin() {
     return isAdmin != FALSE;
 }
 
-// Convert UTF-8 string to wide string for filesystem ops
-std::wstring ToWide(const std::string& utf8) {
-    if (utf8.empty()) return L"";
-    int len = MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, nullptr, 0);
-    std::wstring result(len - 1, L'\0');
-    MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, &result[0], len);
-    return result;
-}
-
-ULONGLONG DeleteFolder(const std::string& folder) {
-    ULONGLONG freed = 0;
+// ---------- 扫描文件夹大小（不删除） ----------
+ULONGLONG ScanFolder(const std::wstring& folder) {
+    ULONGLONG total = 0;
     std::error_code ec;
-    fs::path fp = ToWide(folder);
+    fs::path fp(folder);
+    if (!fs::exists(fp, ec)) return 0;
     for (auto& entry : fs::recursive_directory_iterator(fp, ec)) {
         if (ec) { ec.clear(); continue; }
-        if (fs::is_regular_file(entry)) {
+        if (fs::is_regular_file(entry, ec)) {
+            ULONGLONG sz = fs::file_size(entry, ec);
+            if (!ec) total += sz;
+        }
+    }
+    return total;
+}
+
+// ---------- 删除文件夹 ----------
+ULONGLONG DeleteFolder(const std::wstring& folder) {
+    ULONGLONG freed = 0;
+    std::error_code ec;
+    fs::path fp(folder);
+    if (!fs::exists(fp, ec)) return 0;
+    for (auto& entry : fs::recursive_directory_iterator(fp, ec)) {
+        if (ec) { ec.clear(); continue; }
+        if (fs::is_regular_file(entry, ec)) {
             ULONGLONG sz = fs::file_size(entry, ec);
             if (!ec) freed += sz;
             fs::remove(entry, ec);
-            if (ec) g_totalFailed++;
+            if (ec) {
+                g_totalFailed++;
+            } else {
+                g_totalDeleted++;
+            }
         }
     }
+    // 删空目录
     for (auto& entry : fs::recursive_directory_iterator(fp, ec)) {
         if (ec) { ec.clear(); continue; }
         fs::remove(entry, ec);
     }
     fs::remove(fp, ec);
+    g_totalDeleted += freed;
     return freed;
 }
 
-ULONGLONG EmptyRecycleBin() {
-    ULONGLONG freed = 0;
-    std::string recyclePath = "C:\\$Recycle.Bin";
-    std::error_code ec;
-    fs::path rp = ToWide(recyclePath);
-    if (fs::exists(rp, ec)) {
-        for (auto& userFolder : fs::directory_iterator(rp, ec)) {
-            if (ec) { ec.clear(); continue; }
-            if (!fs::is_directory(userFolder)) continue;
-            std::wstring name = userFolder.path().filename().wstring();
-            if (name == L"S-1-5-18" || name == L"S-1-5-19" || name == L"S-1-5-20") continue;
-            freed += DeleteFolder(recyclePath);  // not ideal but ok
-        }
-    }
-    SHEmptyRecycleBinW(nullptr, nullptr, SHERB_NOCONFIRMATION | SHERB_NOPROGRESSUI | SHERB_NOSOUND);
-    return freed;
-}
+// ---------- 扫描阶段 ----------
+struct ScanResult {
+    std::string name;
+    ULONGLONG   size;
+    bool        skipped;
+};
+std::vector<ScanResult> g_scanResults;
+ULONGLONG g_totalScanned = 0;
 
-void ExecuteClean(const std::vector<CleanTarget>& targets, bool isAdmin) {
-    std::error_code ec;
+void ScanTargets(const std::vector<CleanTarget>& targets, bool isAdmin) {
+    g_scanResults.clear();
+    g_totalScanned = 0;
+
+    std::cout << "\n========================================\n";
+    std::cout << "         正在扫描垃圾文件...\n";
+    std::cout << "========================================\n";
+
     for (auto& t : targets) {
         if (t.requiresAdmin && !isAdmin) {
-            std::cout << "\n[跳过] " << t.name << "（需要管理员权限）\n";
+            g_scanResults.push_back({t.name, 0, true});
             g_totalSkipped++;
             continue;
         }
-        std::cout << "\n[扫描] " << t.name << "\n  路径: " << t.path << "\n";
-        fs::path fp = ToWide(t.path);
-        if (!fs::exists(fp, ec) && t.isFolder) {
-            std::cout << "  -> 路径不存在，跳过。\n";
-            continue;
-        }
-        if (ec) { ec.clear(); }
-        ULONGLONG before = g_totalDeleted;
+        ULONGLONG size = ScanFolder(t.path);
+        g_scanResults.push_back({t.name, size, false});
+        g_totalScanned += size;
+
+        std::cout << "  " << std::setw(25) << std::left << t.name
+                  << " : " << std::setw(12) << FormatSize(size) << "\n";
+    }
+
+    std::cout << "----------------------------------------\n";
+    std::cout << "  总计可清理空间 : " << FormatSize(g_totalScanned) << "\n";
+    std::cout << "  垃圾量评级     : " << ClassifySize(g_totalScanned) << "\n";
+    std::cout << "  跳过项         : " << g_totalSkipped << " 项（需管理员权限）\n";
+    std::cout << "========================================\n";
+}
+
+// ---------- 执行清理 ----------
+void ExecuteClean(const std::vector<CleanTarget>& targets, bool isAdmin) {
+    ULONGLONG freed = 0;
+    for (auto& t : targets) {
+        if (t.requiresAdmin && !isAdmin) continue;
+        std::cout << "\n[清理] " << t.name << " ...\n";
+        ULONGLONG before = freed;
         if (t.name.find("回收站") != std::string::npos) {
-            g_totalDeleted += EmptyRecycleBin();
+            std::wstring rp = L"C:\\$Recycle.Bin";
+            std::error_code ec;
+            if (fs::exists(fs::path(rp), ec)) {
+                for (auto& uf : fs::directory_iterator(fs::path(rp), ec)) {
+                    if (ec) { ec.clear(); continue; }
+                    if (!fs::is_directory(uf)) continue;
+                    std::wstring n = uf.path().filename().wstring();
+                    if (n == L"S-1-5-18" || n == L"S-1-5-19" || n == L"S-1-5-20") continue;
+                    freed += DeleteFolder(uf.path().wstring());
+                }
+            }
+            SHEmptyRecycleBinW(nullptr, nullptr,
+                SHERB_NOCONFIRMATION | SHERB_NOPROGRESSUI | SHERB_NOSOUND);
         } else {
-            g_totalDeleted += DeleteFolder(t.path);
+            freed += DeleteFolder(t.path);
         }
-        ULONGLONG diff = g_totalDeleted - before;
-        std::cout << "  -> 已清理: " << FormatSize(diff) << "\n";
+        ULONGLONG diff = freed - before;
+        std::cout << "  -> 已释放: " << FormatSize(diff) << "\n";
     }
 }
 
+// ---------- 免责声明 ----------
 bool ShowDisclaimer(bool isAdmin) {
     system("cls");
     std::cout << R"(
 +------------------------------------------------------+
-|            C盘垃圾清理工具  v1.0.0                     |
+|            C盘垃圾清理工具  v1.1.0                     |
 +------------------------------------------------------+
 |                   ** 免责声明 **                       |
 |                                                      |
@@ -144,18 +194,19 @@ bool ShowDisclaimer(bool isAdmin) {
 )";
 
     if (isAdmin) {
-        std::cout << "\n  [管理员模式] 完整清理 - 所有项目可用。\n";
+        std::cout << "\n  [管理员模式] 完整清理\n";
     } else {
-        std::cout << "\n  [普通用户模式] 仅清理无需管理员权限的项目。\n";
-        std::cout << "  以管理员身份运行可获得完整清理能力。\n";
+        std::cout << "\n  [普通用户模式] 仅清理用户目录垃圾\n";
+        std::cout << "  以管理员身份运行可清理系统目录。\n";
     }
 
-    std::cout << "\n输入 YES 确认继续清理，其他任意键退出: ";
+    std::cout << "\n输入 YES 开始扫描，其他任意键退出: ";
     std::string input;
     std::getline(std::cin, input);
     return (input == "YES" || input == "yes" || input == "Yes");
 }
 
+// ---------- 主入口 ----------
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
@@ -163,47 +214,63 @@ int main() {
     bool isAdmin = IsRunningAsAdmin();
 
     if (!ShowDisclaimer(isAdmin)) {
-        std::cout << "\n已取消清理。按回车退出...";
+        std::cout << "\n已取消，按回车退出...";
         std::cin.get();
         return 0;
     }
 
-    char userProfile[MAX_PATH];
-    char localAppData[MAX_PATH];
-    GetEnvironmentVariableA("USERPROFILE", userProfile, MAX_PATH);
-    GetEnvironmentVariableA("LOCALAPPDATA", localAppData, MAX_PATH);
-    std::string profile(userProfile);
-    std::string local(localAppData);
+    // 获取路径（宽字符版本，支持中文）
+    wchar_t userProfile[MAX_PATH];
+    wchar_t localAppData[MAX_PATH];
+    GetEnvironmentVariableW(L"USERPROFILE", userProfile, MAX_PATH);
+    GetEnvironmentVariableW(L"LOCALAPPDATA", localAppData, MAX_PATH);
+    std::wstring profile(userProfile);
+    std::wstring local(localAppData);
 
     std::vector<CleanTarget> targets = {
         // ---- 无需管理员权限 ----
-        {"用户 Temp",              profile + "\\AppData\\Local\\Temp", true, false},
-        {"Chrome 缓存",            local + "\\Google\\Chrome\\User Data\\Default\\Cache", true, false},
-        {"Chrome Code Cache",      local + "\\Google\\Chrome\\User Data\\Default\\Code Cache", true, false},
-        {"Edge 缓存",              local + "\\Microsoft\\Edge\\User Data\\Default\\Cache", true, false},
-        {"Edge Code Cache",        local + "\\Microsoft\\Edge\\User Data\\Default\\Code Cache", true, false},
-        {"Firefox 缓存",           local + "\\Mozilla\\Firefox\\Profiles", true, false},
-        {"缩略图缓存",             profile + "\\AppData\\Local\\Microsoft\\Windows\\Explorer", true, false},
+        {"用户 Temp",              profile + L"\\AppData\\Local\\Temp", true, false},
+        {"Chrome 缓存",            local + L"\\Google\\Chrome\\User Data\\Default\\Cache", true, false},
+        {"Chrome Code Cache",      local + L"\\Google\\Chrome\\User Data\\Default\\Code Cache", true, false},
+        {"Edge 缓存",              local + L"\\Microsoft\\Edge\\User Data\\Default\\Cache", true, false},
+        {"Edge Code Cache",        local + L"\\Microsoft\\Edge\\User Data\\Default\\Code Cache", true, false},
+        {"Firefox 缓存",           local + L"\\Mozilla\\Firefox\\Profiles", true, false},
+        {"缩略图缓存",             profile + L"\\AppData\\Local\\Microsoft\\Windows\\Explorer", true, false},
 
         // ---- 需要管理员权限 ----
-        {"Windows Temp",           "C:\\Windows\\Temp", true, true},
-        {"回收站",                 "C:\\$Recycle.Bin", true, true},
-        {"预读取文件 (Prefetch)",   "C:\\Windows\\Prefetch", true, true},
-        {"Windows 更新缓存",        "C:\\Windows\\SoftwareDistribution\\Download", true, true},
-        {"Windows 错误报告",        "C:\\ProgramData\\Microsoft\\Windows\\WER", true, true},
-        {"Windows 日志",           "C:\\Windows\\Logs", true, true},
+        {"Windows Temp",           L"C:\\Windows\\Temp", true, true},
+        {"回收站",                 L"C:\\$Recycle.Bin", true, true},
+        {"预读取文件 (Prefetch)",   L"C:\\Windows\\Prefetch", true, true},
+        {"Windows 更新缓存",        L"C:\\Windows\\SoftwareDistribution\\Download", true, true},
+        {"Windows 错误报告",        L"C:\\ProgramData\\Microsoft\\Windows\\WER", true, true},
+        {"Windows 日志",           L"C:\\Windows\\Logs", true, true},
     };
 
-    std::cout << "\n开始分析清理目标，共 " << targets.size() << " 项。\n";
+    // ---- 第一阶段：扫描 ----
+    ScanTargets(targets, isAdmin);
+
+    // ---- 询问是否执行清理 ----
+    std::cout << "\n输入 DELETE 确认删除以上垃圾文件，其他任意键退出: ";
+    std::string confirm;
+    std::getline(std::cin, confirm);
+    if (confirm != "DELETE") {
+        std::cout << "\n已取消清理，按回车退出...";
+        std::cin.get();
+        return 0;
+    }
+
+    // ---- 第二阶段：清理 ----
+    g_totalDeleted = 0;
+    g_totalFailed = 0;
     ExecuteClean(targets, isAdmin);
 
+    // ---- 汇总报告 ----
     std::cout << "\n";
     std::cout << "+--------------------------------------+\n";
     std::cout << "|         清理完成 - 汇总报告           |\n";
     std::cout << "+--------------------------------------+\n";
     std::cout << "|  已清理空间 : " << std::setw(14) << FormatSize(g_totalDeleted) << "  |\n";
     std::cout << "|  失败项     : " << std::setw(14) << g_totalFailed << "  |\n";
-    std::cout << "|  跳过项     : " << std::setw(14) << g_totalSkipped << "  |\n";
     std::cout << "+--------------------------------------+\n";
 
     std::cout << "\n按回车退出...";

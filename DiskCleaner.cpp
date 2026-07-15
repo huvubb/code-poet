@@ -152,6 +152,72 @@ const Lang L_en = {
     "Path not found, skipped."
 };
 
+// Traditional Chinese
+const Lang L_zhTW = {
+    "C碟垃圾清理工具  v1.5.0",
+    "免 責 聲 明",
+    "本工具免費提供，僅供個人清理系統垃圾使用。",
+    "使用前請關閉重要程式，並提前備份數據。",
+    "本軟體無惡意程式碼，但無法保證絕對安全。",
+    "使用即視為同意：開發者對任何直接或間接損失",
+    "（包括數據丟失、系統損壞等）不承擔責任。",
+    "清理範圍：Temp / 回收筒 / 瀏覽器快取 / Prefetch",
+    "         更新快取 / 錯誤報告 / 日誌 / 縮圖",
+    "[系統管理員] 完整清理 - 13 項",
+    "[普通使用者] 僅使用者目錄 - 7 項",
+    "以系統管理員身份執行可解鎖全部清理能力。",
+    "請輸入語言代碼（如 en, zh）: ",
+    "無效代碼，預設使用中文。",
+    "輸入 YES 開始掃描，其他任意鍵退出: ",
+    "正在掃描垃圾檔案...",
+    "跳過（需系統管理員權限）",
+    "總計可清理",
+    "垃圾量評級",
+    "跳過項（需系統管理員權限）",
+    "掃描報告彙整",
+    "可清理項目",
+    "總大小",
+    "請選擇清理方式：",
+    "[A] 全部清理",
+    "[S] 自定義選擇",
+    "[N] 不清理，退出",
+    "請輸入 A / S / N: ",
+    "請輸入編號（如 1,3-5）: ",
+    "可選項目列表（逗號分隔，支援範圍如 3-5）:",
+    "已選擇以下項目:",
+    "本次將清理",
+    "確認清理？輸入 Y 執行，其他任意鍵取消: ",
+    "沒有有效選擇，已取消。",
+    "開始清理垃圾檔案...",
+    "清理",
+    "釋放",
+    "清理完成 - 彙整報告",
+    "已清理空間",
+    "失敗項",
+    "已取消清理。按 Enter 退出...",
+    "按 Enter 退出...",
+    "沒有發現可清理的垃圾檔案。",
+    "輕度   (under 500 MB)",
+    "中等   (500 MB to 2 GB)",
+    "較多   (2 GB to 5 GB)",
+    "大量   (5 GB to 10 GB)",
+    "嚴重   (over 10 GB)",
+    "使用者 Temp",
+    "Chrome 快取",
+    "Chrome Code Cache",
+    "Edge 快取",
+    "Edge Code Cache",
+    "Firefox 快取",
+    "縮圖快取",
+    "Windows Temp",
+    "回收筒",
+    "預讀取檔 (Prefetch)",
+    "Windows 更新快取",
+    "Windows 錯誤報告",
+    "Windows 日誌",
+    "路徑不存在，跳過。"
+};
+
 const Lang L_zh = {
     "C Drive Junk Cleaner  v1.5.0",
     "DISCLAIMER",
@@ -3344,9 +3410,10 @@ struct LangInfo {
     const Lang* data;
 };
 
-const LangInfo g_langs[50] = {
+const LangInfo g_langs[51] = {
     {"en", "English", &L_en},
-    {"zh", "Chinese", &L_zh},
+    {"zh", "\u7b80\u4f53\u4e2d\u6587", &L_zh},
+    {"zh-TW", "\u7e41\u9ad4\u4e2d\u6587", &L_zhTW},
     {"ja", "Japanese", &L_ja},
     {"ko", "Korean", &L_ko},
     {"vi", "Vietnamese", &L_vi},
@@ -3398,7 +3465,7 @@ const LangInfo g_langs[50] = {
 };
 
 
-int g_langCount = 50;
+int g_langCount = 51;
 const Lang* g_lang = &L_en;
 
 // ---------- Utilities ----------
@@ -3496,7 +3563,7 @@ void ChooseLanguage() {
     std::cout << "|     C Drive Junk Cleaner  v1.5.0                     |\n";
     std::cout << "|     " << "\347\233\230\345\236\203\345\234\276\346\270\205\347\220\206\345\267\245\345\205\267" << "  v1.5.0                 |\n";
     std::cout << "+------------------------------------------------------+\n";
-    std::cout << "|  50 languages available                              |\n";
+    std::cout << "|  51 languages available                              |\n";
     std::cout << "+------------------------------------------------------+\n\n";
 
     int cols = 5;

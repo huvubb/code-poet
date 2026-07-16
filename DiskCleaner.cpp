@@ -3610,12 +3610,7 @@ struct ScanResult {
 
 // ---------- Language selection ----------
 std::wstring GetConfigPath() {
-    wchar_t exePath[MAX_PATH];
-    GetModuleFileNameW(nullptr, exePath, MAX_PATH);
-    std::wstring dir(exePath);
-    size_t pos = dir.find_last_of(L"\\/");
-    if (pos != std::wstring::npos) dir = dir.substr(0, pos);
-    return dir + L"\\diskcleaner_lang.cfg";
+    return L"D:\\diskcleaner_lang.cfg";
 }
 
 bool TryLoadLanguage() {

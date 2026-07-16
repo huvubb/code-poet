@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <filesystem>
 #include <cstring>
+#include <fstream>
 
 namespace fs = std::filesystem;
 
@@ -3608,7 +3609,44 @@ struct ScanResult {
 };
 
 // ---------- Language selection ----------
+std::wstring GetConfigPath() {
+    wchar_t exePath[MAX_PATH];
+    GetModuleFileNameW(nullptr, exePath, MAX_PATH);
+    std::wstring dir(exePath);
+    size_t pos = dir.find_last_of(L"\\/");
+    if (pos != std::wstring::npos) dir = dir.substr(0, pos);
+    return dir + L"\\diskcleaner_lang.cfg";
+}
+
+bool TryLoadLanguage() {
+    std::wstring cfgPath = GetConfigPath();
+    std::ifstream cfg(cfgPath.c_str());
+    if (!cfg.is_open()) return false;
+    std::string code;
+    std::getline(cfg, code);
+    cfg.close();
+    for (char& c : code) c = (char)tolower((unsigned char)c);
+    for (int i = 0; i < g_langCount; i++) {
+        if (code == g_langs[i].code) {
+            g_lang = g_langs[i].data;
+            return true;
+        }
+    }
+    return false;
+}
+
+void SaveLanguage(const std::string& code) {
+    std::wstring cfgPath = GetConfigPath();
+    std::ofstream cfg(cfgPath.c_str());
+    if (cfg.is_open()) {
+        cfg << code;
+        cfg.close();
+    }
+}
+
 void ChooseLanguage() {
+    if (TryLoadLanguage()) return;
+
     system("cls");
     std::cout << "\n";
     std::cout << "+------------------------------------------------------+\n";
@@ -3635,6 +3673,7 @@ void ChooseLanguage() {
     for (int i = 0; i < g_langCount; i++) {
         if (input == g_langs[i].code) {
             g_lang = g_langs[i].data;
+            SaveLanguage(g_langs[i].code);
             return;
         }
     }
